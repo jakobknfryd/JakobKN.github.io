@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Poengspill</title>
+    <style>
+        body {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #f4f4f4;
+            transition: background-color 0.5s;
+            overflow: hidden;
+            font-family: Arial, sans-serif;
+        }
+        .box {
+            width: 100px;
+            height: 100px;
+            background-color: red;
+            position: absolute;
+            transition: 0.5s;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: white;
+            font-size: 20px;
+            font-weight: bold;
+            cursor: pointer;
+            border-radius: 10px;
+        }
+        .score {
+            font-size: 24px;
+            margin-bottom: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="score">Poeng: <span id="score">0</span></div>
+    <div class="box" onclick="increaseScore()">Klikk meg!</div>
+    <script>
+        let score = 0;
+        let speed = 1000;
+        let timeout;
+
+        function moveBox() {
+            const box = document.querySelector('.box');
+            const x = Math.random() * (window.innerWidth - 100);
+            const y = Math.random() * (window.innerHeight - 100);
+            box.style.transform = `translate(${x}px, ${y}px)`;
+            box.style.backgroundColor = '#' + Math.floor(Math.random()*16777215).toString(16);
+            timeout = setTimeout(moveBox, speed);
+        }
+
+        function increaseScore() {
+            score++;
+            document.getElementById('score').textContent = score;
+            clearTimeout(timeout);
+            speed = Math.max(200, speed - 50);
+            moveBox();
+        }
+
+        moveBox();
+    </script>
+</body>
+</html>
